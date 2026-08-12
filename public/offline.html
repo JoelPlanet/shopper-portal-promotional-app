@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Display Unavailable</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    background: #000;
+    color: #fff;
+    font-family: system-ui, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .message {
+    padding: 2rem;
+  }
+  h1 {
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    font-weight: 300;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+  }
+  p {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    opacity: 0.6;
+  }
+</style>
+</head>
+<body>
+  <div class="message">
+    <h1>Display temporarily unavailable</h1>
+    <p>The display will resume automatically when connectivity is restored.</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+@font-face {
+  font-family: "TT Commons";
+  src: url("/assets/fonts/tt-commons/TTCommons-Regular.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TT Commons";
+  src: url("/assets/fonts/tt-commons/TTCommons-Italic.otf") format("opentype");
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TT Commons";
+  src: url("/assets/fonts/tt-commons/TTCommons-Medium.otf") format("opentype");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TT Commons";
+  src: url("/assets/fonts/tt-commons/TTCommons-MediumItalic.otf") format("opentype");
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TT Commons";
+  src: url("/assets/fonts/tt-commons/TTCommons-Bold.otf") format("opentype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "TT Commons";
+  src: url("/assets/fonts/tt-commons/TTCommons-BoldItalic.otf") format("opentype");
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+:root {
+  --app-font-family: "TT Commons", "TT Commons Pro", "Neue Haas Grotesk Text Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+body {
+  font-family: var(--app-font-family);
+  background: #fff;
+  color: #111;
+  overflow: hidden;
+}

@@ -1,0 +1,18 @@
+{
+  "headline": "扫描二维码申请并跟踪您的退款",
+  "subheading": "使用 Shopper Portal，退税购物更轻松",
+  "qrCallToAction": "扫描二维码",
+  "shopperPortalName": "Shopper Portal",
+  "heroImageAltText": "带有退税二维码的 Shopper Portal 应用程序",
+  "settings": {
+    "title": "Display Settings",
+    "pinPrompt": "Enter PIN to access settings",
+    "pinError": "Incorrect PIN. Please try again.",
+    "languagesLabel": "Active languages",
+    "intervalLabel": "Rotation interval",
+    "intervalUnit": "seconds",
+    "saveButton": "Save",
+    "restoreDefaultsButton": "Restore defaults",
+    "restoreDefaultsConfirm": "Reset all settings to defaults?"
+  }
+}

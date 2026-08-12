@@ -1,0 +1,243 @@
+/* Settings page — always LTR regardless of display locale */
+.settings-view {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: #f5f5f5;
+  color: #111;
+  font-family: var(--app-font-family);
+  direction: ltr;
+  padding: clamp(1rem, 3vw, 2.5rem);
+}
+
+.settings-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.settings-logo {
+  height: 2rem;
+  width: auto;
+}
+
+.settings-title {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #111;
+}
+
+.settings-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Shared field label style */
+.settings-field-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #555;
+  margin-bottom: 0.75rem;
+  border: none;
+  padding: 0;
+}
+
+/* ─── Language Selector ─────────────────────────────── */
+.language-selector {
+  border: none;
+  padding: 0;
+}
+
+.language-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.lang-btn {
+  padding: 0.65rem 1.25rem;
+  font-size: 1rem;
+  border-radius: 2rem;
+  border: 2px solid #ccc;
+  background: #fff;
+  color: #444;
+  cursor: pointer;
+  transition: all 0.15s;
+  min-width: 5.5rem;
+  text-align: center;
+  font-family: inherit;
+}
+
+.lang-btn:hover:not(.lang-btn--locked) {
+  border-color: #999;
+}
+
+.lang-btn--active {
+  background: #003087;
+  border-color: #003087;
+  color: #fff;
+  font-weight: 500;
+}
+
+.lang-btn--locked {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ─── Rotation Interval ─────────────────────────────── */
+.interval-picker {
+  border: none;
+  padding: 0;
+}
+
+.interval-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.interval-btn {
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.4rem;
+  border-radius: 0.5rem;
+  border: 2px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+
+.interval-btn:hover:not(:disabled) {
+  background: #eee;
+}
+
+.interval-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.interval-input {
+  width: 5rem;
+  text-align: center;
+  font-size: 1.4rem;
+  padding: 0.4rem;
+  border: 2px solid #ccc;
+  border-radius: 0.5rem;
+  font-family: inherit;
+}
+
+.interval-input:focus {
+  outline: none;
+  border-color: #0066cc;
+}
+
+/* Hide browser spinner arrows */
+.interval-input::-webkit-outer-spin-button,
+.interval-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.interval-unit {
+  font-size: 0.95rem;
+  color: #666;
+}
+
+.interval-note {
+  font-size: 0.8rem;
+  color: #888;
+  margin-top: 0.4rem;
+}
+
+/* ─── Notes ─────────────────────────────────────────── */
+.settings-note {
+  font-size: 0.9rem;
+  color: #555;
+  background: #fff;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e0e0e0;
+}
+
+.settings-note--muted {
+  color: #888;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: 0.8rem;
+}
+
+/* ─── Footer buttons ─────────────────────────────────── */
+.settings-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #ddd;
+}
+
+.settings-btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-family: inherit;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.15s, opacity 0.15s;
+}
+
+.settings-btn--primary {
+  background: #003087;
+  color: #fff;
+}
+
+.settings-btn--primary:hover:not(:disabled) {
+  background: #004ab5;
+}
+
+.settings-btn--primary:disabled {
+  opacity: 0.65;
+  cursor: default;
+}
+
+.settings-btn--danger {
+  background: #f5f5f5;
+  color: #cc3300;
+  border: 1px solid #cc3300;
+}
+
+.settings-btn--danger:hover {
+  background: #fdf0ed;
+}
+
+.settings-btn--confirm {
+  background: #cc3300;
+  color: #fff;
+  border-color: #cc3300;
+}
+
+.settings-btn--confirm:hover {
+  background: #a32800;
+}
+
+.settings-btn--secondary {
+  background: #eee;
+  color: #333;
+}
+
+.settings-btn--secondary:hover {
+  background: #ddd;
+}

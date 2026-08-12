@@ -1,0 +1,18 @@
+{
+  "headline": "Escanee el código QR para solicitar y hacer seguimiento de su reembolso",
+  "subheading": "Tu experiencia de compras Tax Free más simple con Shopper Portal",
+  "qrCallToAction": "Escanee el código QR",
+  "shopperPortalName": "Shopper Portal",
+  "heroImageAltText": "Aplicación Shopper Portal con código QR para devolución de impuestos",
+  "settings": {
+    "title": "Display Settings",
+    "pinPrompt": "Enter PIN to access settings",
+    "pinError": "Incorrect PIN. Please try again.",
+    "languagesLabel": "Active languages",
+    "intervalLabel": "Rotation interval",
+    "intervalUnit": "seconds",
+    "saveButton": "Save",
+    "restoreDefaultsButton": "Restore defaults",
+    "restoreDefaultsConfirm": "Reset all settings to defaults?"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "headline": "Scannez le QR code pour demander et suivre votre remboursement",
+  "subheading": "Faire du shopping détaxé est plus facile avec le Shopper Portal",
+  "qrCallToAction": "Scannez le QR code",
+  "shopperPortalName": "Shopper Portal",
+  "heroImageAltText": "Application Shopper Portal avec QR code de remboursement de taxe",
+  "settings": {
+    "title": "Display Settings",
+    "pinPrompt": "Enter PIN to access settings",
+    "pinError": "Incorrect PIN. Please try again.",
+    "languagesLabel": "Active languages",
+    "intervalLabel": "Rotation interval",
+    "intervalUnit": "seconds",
+    "saveButton": "Save",
+    "restoreDefaultsButton": "Restore defaults",
+    "restoreDefaultsConfirm": "Reset all settings to defaults?"
+  }
+}

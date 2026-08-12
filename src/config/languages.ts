@@ -1,0 +1,21 @@
+export type LocaleCode = 'en' | 'zh-CN' | 'ar' | 'fr' | 'es' | 'pt'
+
+export interface DisplayConfiguration {
+  selectedLocales: LocaleCode[]
+  rotationIntervalSeconds: number
+}
+
+export interface LanguageCatalogueEntry {
+  code: LocaleCode
+  label: string
+  direction: 'ltr' | 'rtl'
+}
+
+export const LANGUAGE_CATALOGUE: LanguageCatalogueEntry[] = [
+  { code: 'en',    label: 'English',    direction: 'ltr' },
+  { code: 'zh-CN', label: '中文',        direction: 'ltr' },
+  { code: 'ar',    label: 'العربية',    direction: 'rtl' },
+  { code: 'fr',    label: 'Français',   direction: 'ltr' },
+  { code: 'es',    label: 'Español',    direction: 'ltr' },
+  { code: 'pt',    label: 'Português',  direction: 'ltr' },
+]

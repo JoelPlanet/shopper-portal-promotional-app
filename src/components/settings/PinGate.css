@@ -1,0 +1,118 @@
+/* Settings icon — fixed bottom-right, low-opacity so it doesn't distract shoppers */
+.settings-icon-btn {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #888;
+  opacity: 0.25;
+  cursor: pointer;
+  padding: 0.75rem;
+  line-height: 1;
+  transition: opacity 0.2s;
+  z-index: 20;
+  border-radius: 50%;
+}
+
+.settings-icon-btn:hover,
+.settings-icon-btn:focus-visible {
+  opacity: 0.6;
+  outline: 2px solid #666;
+  outline-offset: 2px;
+}
+
+/* Full-screen backdrop */
+.pin-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.pin-dialog {
+  background: #fff;
+  color: #111;
+  border-radius: 1rem;
+  padding: 2.5rem 2rem;
+  width: min(360px, 90vw);
+  text-align: center;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+  direction: ltr;
+}
+
+.pin-prompt {
+  font-size: 1.1rem;
+  margin-bottom: 1.25rem;
+  color: #333;
+}
+
+.pin-input {
+  display: block;
+  width: 100%;
+  font-size: 2rem;
+  letter-spacing: 0.5rem;
+  text-align: center;
+  padding: 0.75rem 1rem;
+  border: 2px solid #ccc;
+  border-radius: 0.5rem;
+  outline: none;
+  margin-bottom: 0.75rem;
+  transition: border-color 0.15s;
+}
+
+.pin-input:focus {
+  border-color: #0066cc;
+}
+
+.pin-error {
+  color: #cc0000;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+  min-height: 1.25rem;
+}
+
+.pin-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.pin-btn {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  min-width: 7rem;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+
+.pin-btn--primary {
+  background: #003087;
+  color: #fff;
+}
+
+.pin-btn--primary:hover:not(:disabled) {
+  background: #004ab5;
+}
+
+.pin-btn--primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.pin-btn--secondary {
+  background: #eee;
+  color: #333;
+}
+
+.pin-btn--secondary:hover {
+  background: #ddd;
+}
