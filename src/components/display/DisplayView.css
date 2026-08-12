@@ -22,19 +22,22 @@
 }
 
 .planet-logo {
-  height: clamp(3rem, 9vh, 7.5rem);
+  height: clamp(3rem, 9vmax, 7.5rem);
   width: auto;
 }
 
 /* Localised headline above hero image */
 .display-headline {
-  font-size: clamp(1.25rem, 3.5vw, 2.75rem);
+  --slot-font-size: clamp(1.25rem, 3.5vw, 2.75rem);
+  font-size: var(--fitted-font-size, var(--slot-font-size));
   font-weight: 400;
   text-align: center;
   line-height: 1.3;
-  min-height: calc(2 * 1.3em);
+  height: calc(3.9 * var(--slot-font-size));
   flex-shrink: 0;
-  max-width: 50%;
+  max-width: 80%;
+  overflow: hidden;
+  overflow-wrap: anywhere;
 }
 
 /* Hero image container */
@@ -57,14 +60,23 @@
 
 /* Localised supporting text below hero image */
 .display-subheading {
-  font-size: clamp(0.9rem, 2.2vw, 1.6rem);
+  --slot-font-size: clamp(0.9rem, 2.2vw, 1.6rem);
+  --slot-padding-top: clamp(0.5rem, 1.5vw, 1.5rem);
+  font-size: var(--fitted-font-size, var(--slot-font-size));
   text-align: center;
   line-height: 1.4;
-  min-height: calc(2 * 1.4em);
+  height: calc(4.2 * var(--slot-font-size) + var(--slot-padding-top));
   opacity: 0.85;
   flex-shrink: 0;
-  max-width: 90%;
-  padding-top: clamp(0.5rem, 1.5vw, 1.5rem);
+  max-width: 80%;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  padding-top: var(--slot-padding-top);
+}
+
+.display-text--full-width {
+  width: 100%;
+  max-width: 100%;
 }
 
 /* Landscape adjustments */
@@ -78,29 +90,23 @@
   }
 
   .display-headline {
-    font-size: clamp(1.1rem, 2.8vw, 2.4rem);
+    --slot-font-size: clamp(1.1rem, 2.8vw, 2.4rem);
   }
 
   .display-subheading {
-    font-size: clamp(0.8rem, 1.8vw, 1.4rem);
+    --slot-font-size: clamp(0.8rem, 1.8vw, 1.4rem);
   }
 
-  .planet-logo {
-    height: clamp(1.5rem, 5vh, 4rem);
-  }
 }
 
 /* Large display adjustments (1920px+) */
 @media (min-width: 1920px) {
   .display-headline {
-    font-size: clamp(2rem, 2.5vw, 4rem);
+    --slot-font-size: clamp(2rem, 2.5vw, 4rem);
   }
 
   .display-subheading {
-    font-size: clamp(1.25rem, 1.5vw, 2.25rem);
+    --slot-font-size: clamp(1.25rem, 1.5vw, 2.25rem);
   }
 
-  .planet-logo {
-    height: clamp(3rem, 5vh, 6rem);
-  }
 }
