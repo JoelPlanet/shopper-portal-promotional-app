@@ -150,6 +150,40 @@ rotation continues, and the QR code remains visible and scannable for at least
 
 ---
 
+### User Story 5 — Display Reduces Image Retention Risk (Priority: P2)
+
+The unattended display periodically replaces the QR experience with a black
+screen containing only the centred Tax Free from Planet logo. This temporary
+mode reduces prolonged display of static high-contrast content without losing
+application state or requiring deployment-specific configuration.
+
+**Independent Test**: Leave the shopper display untouched for five minutes.
+Verify it fades to the preservation screen for 15 seconds, then fades back to
+the unchanged QR experience. Repeat and interact during preservation mode to
+verify the display restores immediately.
+
+**Acceptance Scenarios**:
+
+1. **Given** the application loads, **When** the shopper display first appears,
+  **Then** preservation mode is shown for three seconds before the normal QR
+  experience appears.
+2. **Given** an administrator confirms Restore defaults, **When** the display
+  returns, **Then** preservation mode is shown for three seconds before the
+  normal QR experience appears.
+3. **Given** the shopper display has remained active for five minutes, **When**
+  the preservation interval elapses, **Then** the normal UI fades to a black
+  full-screen view containing only the centred Tax Free from Planet logo.
+4. **Given** periodic preservation mode is active, **When** 15 seconds elapse, **Then**
+  the display fades back to the standard QR experience without reloading.
+5. **Given** preservation mode is active, **When** a user touches, clicks,
+  moves the mouse, or presses a key, **Then** preservation mode is dismissed
+  immediately and its five-minute interval restarts.
+6. **Given** language rotation is configured, **When** preservation mode is
+  active, **Then** rotation pauses and resumes from the current language after
+  the standard display returns.
+
+---
+
 ### Edge Cases
 
 - What happens when no configuration has ever been saved? — The display falls
@@ -168,6 +202,9 @@ rotation continues, and the QR code remains visible and scannable for at least
 - What happens when the display is deployed on a very large screen with wide
   aspect ratio? — Content must scale and remain legible without distortion or
   unconstrained stretching.
+- What happens when interaction dismisses preservation mode? — The standard
+  display returns immediately and the next five-minute interval starts from
+  the dismissal time.
 
 ---
 
@@ -218,6 +255,29 @@ rotation continues, and the QR code remains visible and scannable for at least
   language continuously without rotation.
 - **FR-013**: Language rotation interval MUST be configurable and MUST enforce
   a minimum interval of at least 5 seconds.
+
+**Screen Preservation**
+
+- **FR-032**: The shopper display MUST enter screen preservation mode after
+  every five uninterrupted minutes of standard display operation.
+- **FR-033**: Preservation mode MUST show a full-screen black background with
+  only the Tax Free from Planet logo centred horizontally and vertically.
+- **FR-034**: Preservation mode MUST last 15 seconds and return to the standard
+  display without a page reload or application state reset.
+- **FR-035**: Entering and leaving preservation mode MUST use a smooth fade of
+  approximately one second without flashing.
+- **FR-036**: Touch, click, mouse movement, or key press MUST immediately
+  dismiss preservation mode and restart its five-minute interval.
+- **FR-037**: Language rotation MUST pause during preservation mode and resume
+  from the current language when the normal display returns.
+- **FR-038**: Preservation timing MUST be hard-coded and identical across all
+  deployments, with no administrator configuration.
+- **FR-039**: On initial application load and immediately after Restore
+  defaults, preservation mode MUST be shown for three seconds and remain
+  dismissible by the supported interaction events.
+- **FR-040**: The default configuration MUST enable every supported language
+  with a 15-second rotation interval. Restore defaults MUST apply this same
+  configuration.
 
 **Administration**
 
@@ -280,6 +340,11 @@ rotation continues, and the QR code remains visible and scannable for at least
   layout adjustment.
 - **SC-008**: The administration area and all shopper-facing content meet
   WCAG 2.2 AA accessibility standards.
+- **SC-009**: Preservation mode enters after five minutes, remains for 15
+  seconds, and responds to user interaction consistently across supported
+  kiosk, tablet, TV, desktop, and full-screen browser deployments.
+- **SC-010**: Initial load and Restore defaults show preservation mode for
+  three seconds before displaying all supported languages on a 15-second cycle.
 
 ---
 
@@ -313,8 +378,8 @@ rotation continues, and the QR code remains visible and scannable for at least
   configuration; offline mode activates only after a successful initial load.
 - The application is deployed as a hosted web application accessed via a URL;
   no native installation is required on display devices.
-- The display operates in a continuous, unattended loop; there is no concept of
-  an idle state, screen saver, or session timeout on the shopper-facing view.
+- The display operates continuously and uses the fixed preservation cycle
+  defined in FR-032 through FR-038; this cycle is not user-configurable.
 - All promotional copy, translations, and Shopper Portal imagery are managed by
   Planet and deployed as part of the application. Administrators can choose
   which languages are active but cannot edit translation content.

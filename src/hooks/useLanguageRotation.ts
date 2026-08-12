@@ -6,9 +6,10 @@ const MINIMUM_INTERVAL_SECONDS = 5
 interface Options {
   selectedLocales: LocaleCode[]
   rotationIntervalSeconds: number
+  isPaused?: boolean
 }
 
-export function useLanguageRotation({ selectedLocales, rotationIntervalSeconds }: Options) {
+export function useLanguageRotation({ selectedLocales, rotationIntervalSeconds, isPaused = false }: Options) {
   const [activeIndex, setActiveIndex] = useState(0)
   const intervalRef = useRef<ReturnType<typeof setInterval>>()
 
@@ -21,7 +22,7 @@ export function useLanguageRotation({ selectedLocales, rotationIntervalSeconds }
   useEffect(() => {
     clearInterval(intervalRef.current)
 
-    if (selectedLocales.length <= 1) return
+    if (isPaused || selectedLocales.length <= 1) return
 
     const ms =
       Math.max(MINIMUM_INTERVAL_SECONDS, rotationIntervalSeconds) * 1000
@@ -31,7 +32,7 @@ export function useLanguageRotation({ selectedLocales, rotationIntervalSeconds }
     }, ms)
 
     return () => clearInterval(intervalRef.current)
-  }, [selectedLocales, rotationIntervalSeconds])
+  }, [selectedLocales, rotationIntervalSeconds, isPaused])
 
   const activeLocale = selectedLocales[Math.min(activeIndex, selectedLocales.length - 1)]
 

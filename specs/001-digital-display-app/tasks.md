@@ -43,7 +43,7 @@ until this phase is complete.
 **⚠️ CRITICAL**: Phases 3–7 require this phase to be complete.
 
 - [X] T006 Create `src/config/env.ts` — export `ENV` object reading `import.meta.env.VITE_PIN_HASH` with a TypeScript type guard; throw a descriptive error if `VITE_PIN_HASH` is absent at runtime (guards misconfigured deployments)
-- [X] T007 [P] Create `src/config/defaults.ts` — export `DEFAULT_CONFIGURATION: DisplayConfiguration` as `{ selectedLocales: ['en'], rotationIntervalSeconds: 30 }`
+- [X] T007 [P] Create `src/config/defaults.ts` — export `DEFAULT_CONFIGURATION: DisplayConfiguration` with all supported locales and a 15-second rotation interval
 - [X] T008 [P] Create `src/config/languages.ts` — export `LANGUAGE_CATALOGUE: LanguageCatalogueEntry[]` with the 6 Planet-approved locales (`en`, `zh-CN`, `ar`, `fr`, `es`, `pt`) including `code`, `label`, and `direction` fields; export `LocaleCode` union type (`'en' | 'zh-CN' | 'ar' | 'fr' | 'es' | 'pt'`); export `DisplayConfiguration` interface (`selectedLocales: LocaleCode[]`, `rotationIntervalSeconds: number`) — this is the canonical type definition file
 - [X] T009 [P] Create `src/i18n/locales/en.json` with all required `LanguageContent` keys: `headline`, `subheading`, `qrCallToAction`, `shopperPortalName`, `heroImageAltText`, and all `settings.*` keys (`title`, `pinPrompt`, `pinError`, `languagesLabel`, `intervalLabel`, `intervalUnit`, `saveButton`, `restoreDefaultsButton`, `restoreDefaultsConfirm`); populate with Planet-approved English copy supplied by Planet — do not use placeholder or machine-generated content
 - [X] T010 [P] Create locale JSON files for the remaining 5 approved locales (`zh-CN`, `ar`, `fr`, `es`, `pt`) in `src/i18n/locales/` — same key shape as `en.json`; populate with Planet-approved copy for each locale; do not use machine-generated or placeholder translations — all copy is supplied by Planet
@@ -106,7 +106,7 @@ verify rotation continues.
 reveals language selector, rotation interval picker, Save, and Restore Defaults.
 Changes persist to localStorage and apply immediately to the display on this device.
 
-**Independent Test**: Tap settings icon 4 times — no prompt. Tap 5th time within 5 seconds — PIN prompt appears. Enter wrong PIN — error shown. Enter correct PIN — settings form visible. Change languages and interval, save, return to display, verify changes applied. Restore defaults — English only, 30s interval restored.
+**Independent Test**: Tap settings icon 4 times — no prompt. Tap 5th time within 5 seconds — PIN prompt appears. Enter wrong PIN — error shown. Enter correct PIN — settings form visible. Change languages and interval, save, return to display, verify changes applied. Restore defaults — all languages and a 15-second interval are restored after the three-second preservation screen.
 
 - [X] T027 [US3] Create `src/components/settings/PinGate.tsx` — maintains a tap counter and timestamp in component state; increments counter on each `onClick` of the settings icon button passed via `onActivate` ref or forwarded from `DisplayView`; resets counter if >5 seconds elapse between taps; on 5th tap within window show the PIN form; PIN form renders a single `<input type="password" inputMode="numeric" maxLength={4} />` and a Submit button; on submit compute `SHA-256` of the entered string using `window.crypto.subtle.digest('SHA-256', ...)`, convert to hex, compare to `ENV.pinHash`; on match call `onUnlock()`; on mismatch show error message and clear the input; component does not navigate — it calls a callback
 - [X] T028 [US3] Wire the settings icon button in `src/components/display/DisplayView.tsx` to `PinGate` — import `PinGate`; manage `isSettingsOpen: boolean` in DisplayPage state; render `<PinGate onUnlock={() => navigate('/settings')} />` as an overlay (position fixed, full-screen semi-transparent backdrop) when activated; pass the `onIconClick` handler down through `DisplayView` to the settings icon button
@@ -115,7 +115,7 @@ Changes persist to localStorage and apply immediately to the display on this dev
 - [X] T031 [US3] Create `src/components/settings/SettingsView.tsx` — manages `pendingConfig: DisplayConfiguration` in local state (initialized from `useConfiguration().config`); renders `<LanguageSelector>` and `<RotationIntervalPicker>` bound to `pendingConfig`; **Save button**: calls `useConfiguration().save(pendingConfig)`; on success navigate back to `/`; **Restore Defaults button**: shows confirmation dialog; on confirm calls `useConfiguration().restoreDefaults()` then navigate to `/`; **Back button**: navigate to `/` without saving
 - [X] T032 [US3] Create `src/pages/SettingsPage.tsx` — renders `<PinGate onUnlock={() => setUnlocked(true)} />` when not unlocked; renders `<SettingsView />` when unlocked; on navigate away reset unlocked state (use `useEffect` with location listener)
 
-**Checkpoint**: 5-tap gesture on settings icon triggers PIN prompt. Correct PIN shows settings form. Language selection and rotation interval are configurable, persist to localStorage, and are reflected immediately on the display. Restore Defaults resets to English only / 30s.
+**Checkpoint**: 5-tap gesture on settings icon triggers PIN prompt. Correct PIN shows settings form. Language selection and rotation interval are configurable, persist to localStorage, and are reflected immediately on the display. Restore Defaults resets to all supported languages / 15s and replays the three-second preservation screen.
 
 ---
 
@@ -136,6 +136,25 @@ shown instead of browser error.
 - [ ] T036 [US4] Validate `navigateFallback` behaviour — serve the production build (`npm run preview`), open DevTools → Application → Storage, clear site data, reload while offline; confirm browser shows `/offline.html` content (not a browser network error page); if `offline.html` is not served, adjust `navigateFallback` and `navigateFallbackDenylist` in `vite.config.ts`
 
 **Checkpoint**: Production build serves full display from Service Worker cache after first load. Language rotation is unaffected by network loss. Hero image remains visible offline. Pre-cache-miss scenario shows `offline.html`.
+
+---
+
+## Phase 7: Screen Preservation
+
+**Purpose**: Reduce image retention risk on continuously running displays.
+
+- [X] T047 Add focused timer, interaction, pause, and overlay tests in `src/hooks/useScreenPreservation.test.ts`, `src/hooks/useLanguageRotation.test.ts`, and `src/components/display/ScreenPreservationMode.test.tsx`
+- [X] T048 Create `src/hooks/useScreenPreservation.ts` with fixed five-minute activation, 15-second duration, interaction dismissal, cleanup, and interval reset
+- [X] T049 Add pause support to `src/hooks/useLanguageRotation.ts` without resetting the active locale
+- [X] T050 Create the fading black overlay and centred logo in `src/components/display/ScreenPreservationMode.tsx` and `src/components/display/ScreenPreservationMode.css`
+- [X] T051 Copy the supplied logo to `public/assets/tax-free-from-planet.svg`
+- [X] T052 Integrate preservation state and language pause in `src/pages/DisplayPage.tsx`
+- [X] T053 Update `spec.md`, `data-model.md`, and `quickstart.md` with preservation requirements and validation
+- [X] T054 Show preservation mode for three seconds on initial load and after Restore defaults while retaining interaction dismissal
+- [X] T055 Change default and restored configuration to all supported languages with a 15-second rotation interval
+- [X] T056 Add automated coverage for startup preservation, defaults, and Restore defaults navigation
+
+**Checkpoint**: The display enters preservation mode after five minutes, exits after 15 seconds or any supported interaction, and resumes the unchanged QR experience and language cycle without reloading.
 
 ---
 

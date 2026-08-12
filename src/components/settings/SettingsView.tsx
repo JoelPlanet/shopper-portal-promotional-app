@@ -28,7 +28,7 @@ export function SettingsView() {
       return
     }
     restoreDefaults()
-    navigate('/')
+    navigate('/', { state: { showInitialPreservation: true } })
   }
 
   const handleBack = () => navigate('/')

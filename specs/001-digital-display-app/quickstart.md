@@ -114,7 +114,8 @@ occurs and no timer fires.
 9. Repeat the tap gesture and enter the PIN.
 10. Click **Restore Defaults** and confirm.
 11. Navigate to `http://localhost:5173`.
-12. Verify the display has reverted to the default (English only).
+12. Verify preservation mode appears for three seconds, then the display uses
+   all supported languages with a 15-second rotation interval.
 
 **Expected outcome**: PIN correctly gates access; save applies immediately; restore defaults works correctly.
 
@@ -196,6 +197,30 @@ viewport.
 
 **Expected outcome**: No WCAG 2.2 AA violations. Keyboard navigation is fully
 functional across both views.
+
+---
+
+## Validation Scenario 7: Screen Preservation Mode
+
+1. Open or reload the shopper display.
+2. Verify preservation mode appears for three seconds before the QR display.
+3. Reload and click or tap during those three seconds; verify the normal display
+   returns immediately.
+4. Leave the shopper display untouched for five minutes.
+5. Verify the standard UI fades to a full-screen black background showing only
+   the centred Tax Free from Planet logo.
+6. Verify configured language rotation does not advance while this mode is active.
+7. Leave the screen untouched and verify the standard UI fades back after 15 seconds.
+8. Wait for preservation mode again, then dismiss it separately with a click or
+   touch, mouse movement, and key press.
+9. Verify each interaction immediately begins restoring the standard display.
+10. Confirm Restore defaults in settings and verify preservation mode appears
+    for three seconds before all languages begin rotating every 15 seconds.
+
+**Expected outcome**: Startup and Restore defaults show a dismissible three-second
+preservation screen. Periodic timing remains fixed at five minutes and 15 seconds,
+transitions take approximately one second without flashing, no page reload or
+state loss occurs, and interaction restarts the five-minute interval.
 
 ---
 

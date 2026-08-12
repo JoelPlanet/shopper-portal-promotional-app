@@ -34,8 +34,8 @@ interface DisplayConfiguration {
 
 ```typescript
 const DEFAULT_CONFIGURATION: DisplayConfiguration = {
-  selectedLocales: ['en'],
-  rotationIntervalSeconds: 30,
+  selectedLocales: ['en', 'zh-CN', 'ar', 'fr', 'es', 'pt'],
+  rotationIntervalSeconds: 15,
 };
 ```
 
@@ -162,6 +162,27 @@ interface EnvironmentConfiguration {
 
 On config change: reset currentIndex to 0, restart timer with new interval.
 On connectivity loss: no state change; timer continues unaffected.
+On screen preservation: pause the timer at the current index; resume from that
+index when the standard display returns.
+```
+
+### Screen Preservation State Machine
+
+```text
+  APP LOAD ----------------------> PRESERVING (3 seconds)
+  RESTORE DEFAULTS -------------> PRESERVING (3 seconds)
+                                      |
+                                      v
+  STANDARD -- 5 minutes --> PRESERVING -- 15 seconds --> STANDARD
+      ^                          |
+      |                          |
+      +---- any interaction -----+
+
+Entering and leaving PRESERVING uses an approximately one-second opacity
+transition. Click, touch, mouse movement, or key press dismisses either the
+three-second introductory mode or the periodic mode. Returning to STANDARD
+starts a new five-minute interval. State is runtime-only and does not modify
+DisplayConfiguration or localStorage.
 ```
 
 ### Settings Access State Machine
@@ -198,9 +219,9 @@ On connectivity loss: no state change; timer continues unaffected.
 
 | Scenario | Behaviour |
 |----------|-----------|
-| First load (no saved config) | Default configuration applied (`selectedLocales: ['en']`, `rotationIntervalSeconds: 30`) |
+| First load (no saved config) | All supported languages enabled with a 15-second interval; preservation mode shown for 3 seconds |
 | Page reload with saved config | Config read from localStorage; display resumes immediately |
 | Network lost after full load | All assets served from Service Worker cache; localStorage config intact; rotation continues |
 | Network lost before full load | Service Worker serves cached shell if available; error state shown if not yet cached |
 | localStorage cleared | Equivalent to first load; default config applied |
-| Restore Defaults action | `ndsk:config` key removed from localStorage; default config applied |
+| Restore Defaults action | `ndsk:config` removed; all languages and 15-second interval applied; preservation mode shown for 3 seconds |
