@@ -81,11 +81,26 @@
 
 /* Landscape adjustments */
 @media (orientation: landscape) {
+  .display-view {
+    padding: clamp(0.25rem, 1dvh, 1rem);
+  }
+
+  .display-logo-section {
+    padding-bottom: min(clamp(0.5rem, 1.5vw, 1.5rem), 2dvh);
+  }
+
+  .planet-logo {
+    height: min(clamp(3rem, 9vmax, 7.5rem), 15dvh);
+  }
+
   .display-hero-section {
+    min-height: calc(50dvh + 2 * clamp(0.25rem, 1dvh, 1rem));
     padding: clamp(0.25rem, 1vh, 1rem) 0;
   }
 
   .hero-image {
+    height: 50dvh;
+    min-height: 50dvh;
     max-height: 65dvh;
   }
 
@@ -109,4 +124,16 @@
     --slot-font-size: clamp(1.25rem, 1.5vw, 2.25rem);
   }
 
+}
+
+/* Preserve the hero's height budget after large-display typography applies. */
+@media (orientation: landscape) {
+  .display-headline {
+    --slot-font-size: min(clamp(1.1rem, 2.8vw, 2.4rem), 4dvh);
+  }
+
+  .display-subheading {
+    --slot-font-size: min(clamp(0.8rem, 1.8vw, 1.4rem), 2.5dvh);
+    --slot-padding-top: min(clamp(0.5rem, 1.5vw, 1.5rem), 2dvh);
+  }
 }
