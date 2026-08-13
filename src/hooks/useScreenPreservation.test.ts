@@ -17,23 +17,25 @@ describe('useScreenPreservation', () => {
       initialDurationMs: INITIAL_PRESERVATION_DURATION_MS,
     }))
 
-    expect(result.current).toBe(true)
+    expect(result.current.isActive).toBe(true)
+    expect(result.current.isPeriodic).toBe(false)
 
     act(() => vi.advanceTimersByTime(INITIAL_PRESERVATION_DURATION_MS - 1))
-    expect(result.current).toBe(true)
+    expect(result.current.isActive).toBe(true)
 
     act(() => window.dispatchEvent(new Event('click')))
-    expect(result.current).toBe(false)
+    expect(result.current.isActive).toBe(false)
   })
 
   it('activates after five minutes and restores the display after 15 seconds', () => {
     const { result } = renderHook(() => useScreenPreservation())
 
     act(() => vi.advanceTimersByTime(PRESERVATION_INTERVAL_MS))
-    expect(result.current).toBe(true)
+    expect(result.current.isActive).toBe(true)
+    expect(result.current.isPeriodic).toBe(true)
 
     act(() => vi.advanceTimersByTime(PRESERVATION_DURATION_MS))
-    expect(result.current).toBe(false)
+    expect(result.current.isActive).toBe(false)
   })
 
   it.each(['click', 'mousemove', 'touchstart', 'keydown'] as const)(
@@ -43,13 +45,14 @@ describe('useScreenPreservation', () => {
 
       act(() => vi.advanceTimersByTime(PRESERVATION_INTERVAL_MS))
       act(() => window.dispatchEvent(new Event(eventName)))
-      expect(result.current).toBe(false)
+      expect(result.current.isActive).toBe(false)
 
       act(() => vi.advanceTimersByTime(PRESERVATION_INTERVAL_MS - 1))
-      expect(result.current).toBe(false)
+      expect(result.current.isActive).toBe(false)
 
       act(() => vi.advanceTimersByTime(1))
-      expect(result.current).toBe(true)
+      expect(result.current.isActive).toBe(true)
+      expect(result.current.isPeriodic).toBe(true)
     },
   )
 })

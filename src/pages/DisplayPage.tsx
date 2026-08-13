@@ -16,7 +16,7 @@ export default function DisplayPage() {
   const routeState = location.state as { showInitialPreservation?: boolean } | null
   const shouldShowInitialPreservation =
     location.key === 'default' || routeState?.showInitialPreservation === true
-  const isPreserving = useScreenPreservation({
+  const preservation = useScreenPreservation({
     initialDurationMs: shouldShowInitialPreservation
       ? INITIAL_PRESERVATION_DURATION_MS
       : 0,
@@ -25,7 +25,7 @@ export default function DisplayPage() {
   const { activeLocale } = useLanguageRotation({
     selectedLocales: config.selectedLocales,
     rotationIntervalSeconds: config.rotationIntervalSeconds,
-    isPaused: isPreserving,
+    isPaused: preservation.isActive,
   })
 
   return (
@@ -34,7 +34,10 @@ export default function DisplayPage() {
       <PinGate
         onUnlock={() => navigate('/settings', { state: { pinVerified: true } })}
       />
-      <ScreenPreservationMode isActive={isPreserving} />
+      <ScreenPreservationMode
+        isActive={preservation.isActive}
+        isPeriodic={preservation.isPeriodic}
+      />
     </>
   )
 }

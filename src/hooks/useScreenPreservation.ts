@@ -13,12 +13,14 @@ interface Options {
 interface PreservationState {
   isActive: boolean
   durationMs: number
+  isPeriodic: boolean
 }
 
 export function useScreenPreservation({ initialDurationMs = 0 }: Options = {}) {
   const [preservation, setPreservation] = useState<PreservationState>(() => ({
     isActive: initialDurationMs > 0,
     durationMs: initialDurationMs,
+    isPeriodic: false,
   }))
 
   useEffect(() => {
@@ -27,13 +29,18 @@ export function useScreenPreservation({ initialDurationMs = 0 }: Options = {}) {
         () => setPreservation({
           isActive: true,
           durationMs: PRESERVATION_DURATION_MS,
+          isPeriodic: true,
         }),
         PRESERVATION_INTERVAL_MS,
       )
       return () => window.clearTimeout(activationTimer)
     }
 
-    const dismiss = () => setPreservation({ isActive: false, durationMs: 0 })
+    const dismiss = () => setPreservation({
+      isActive: false,
+      durationMs: 0,
+      isPeriodic: false,
+    })
     const durationTimer = window.setTimeout(dismiss, preservation.durationMs)
 
     for (const eventName of DISMISS_EVENTS) {
@@ -48,5 +55,5 @@ export function useScreenPreservation({ initialDurationMs = 0 }: Options = {}) {
     }
   }, [preservation])
 
-  return preservation.isActive
+  return preservation
 }

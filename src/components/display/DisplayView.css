@@ -30,6 +30,9 @@
 /* Localised headline above hero image */
 .display-headline {
   --slot-font-size: clamp(1.25rem, 3.5vw, 2.75rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: var(--fitted-font-size, var(--slot-font-size));
   font-weight: 400;
   text-align: center;

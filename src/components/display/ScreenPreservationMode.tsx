@@ -2,12 +2,13 @@ import './ScreenPreservationMode.css'
 
 interface Props {
   isActive: boolean
+  isPeriodic?: boolean
 }
 
-export function ScreenPreservationMode({ isActive }: Props) {
+export function ScreenPreservationMode({ isActive, isPeriodic = false }: Props) {
   return (
     <div
-      className={`screen-preservation${isActive ? ' screen-preservation--active' : ''}`}
+      className={`screen-preservation${isActive ? ' screen-preservation--active' : ''}${isPeriodic ? ' screen-preservation--periodic' : ''}`}
       aria-hidden={!isActive}
     >
       <img

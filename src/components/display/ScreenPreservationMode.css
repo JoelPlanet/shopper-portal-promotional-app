@@ -20,15 +20,51 @@
   transition: opacity 1s ease-in-out;
 }
 
+.screen-preservation--periodic {
+  opacity: 0;
+  transition: opacity 0s;
+}
+
+.screen-preservation--periodic.screen-preservation--active {
+  opacity: 1;
+  transition: opacity 0s;
+}
+
 .screen-preservation__logo {
   width: min(70vw, 38.75rem);
   max-height: 40dvh;
   object-fit: contain;
 }
 
+.screen-preservation--periodic .screen-preservation__logo {
+  opacity: 0;
+  transform: scale(2.4);
+}
+
+.screen-preservation--periodic.screen-preservation--active .screen-preservation__logo {
+  animation: screen-preservation-perspective-zoom-out 1.2s 500ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes screen-preservation-perspective-zoom-out {
+  from {
+    opacity: 0;
+    transform: scale(2.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .screen-preservation,
   .screen-preservation--active {
     transition-duration: 0.01ms;
+  }
+
+  .screen-preservation--periodic.screen-preservation--active .screen-preservation__logo {
+    animation: none;
+    opacity: 1;
+    transform: scale(1);
   }
 }
