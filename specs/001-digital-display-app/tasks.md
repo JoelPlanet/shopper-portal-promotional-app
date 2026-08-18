@@ -144,7 +144,7 @@ shown instead of browser error.
 **Purpose**: Reduce image retention risk on continuously running displays.
 
 - [X] T047 Add focused timer, interaction, pause, and overlay tests in `src/hooks/useScreenPreservation.test.ts`, `src/hooks/useLanguageRotation.test.ts`, and `src/components/display/ScreenPreservationMode.test.tsx`
-- [X] T048 Create `src/hooks/useScreenPreservation.ts` with fixed five-minute activation, 15-second duration, interaction dismissal, cleanup, and interval reset
+- [X] T048 Create `src/hooks/useScreenPreservation.ts` with configurable activation, 15-second duration, interaction dismissal, cleanup, and trigger reset
 - [X] T049 Add pause support to `src/hooks/useLanguageRotation.ts` without resetting the active locale
 - [X] T050 Create the fading black overlay and centred logo in `src/components/display/ScreenPreservationMode.tsx` and `src/components/display/ScreenPreservationMode.css`
 - [X] T051 Copy the supplied logo to `public/assets/tax-free-from-planet.svg`
@@ -154,7 +154,17 @@ shown instead of browser error.
 - [X] T055 Change default and restored configuration to all supported languages with a 15-second rotation interval
 - [X] T056 Add automated coverage for startup preservation, defaults, and Restore defaults navigation
 
-**Checkpoint**: The display enters preservation mode after five minutes, exits after 15 seconds or any supported interaction, and resumes the unchanged QR experience and language cycle without reloading.
+**Checkpoint**: The display enters preservation mode after its configured cycle or time trigger, exits after 15 seconds or any supported interaction, and resumes the unchanged QR experience and language cycle without reloading.
+
+### Configurable Preservation Trigger Enhancement
+
+- [X] T057 Extend `DisplayConfiguration` defaults and local-storage migration with a persisted `screenPreservationTrigger`, defaulting legacy configurations to five minutes.
+- [X] T058 Track completed language rotation cycles and activate preservation after the configured cycle or time trigger while resetting runtime counters after preservation.
+- [X] T059 Add the exclusive Screen Preservation Trigger settings control with positive-whole-number validation and save blocking for invalid values.
+- [X] T060 Add focused configuration, trigger, cycle, and settings validation coverage; update feature documentation and quickstart scenarios.
+- [X] T061 Add a persisted 5–30 second Screen Preservation duration setting using the shared interval picker; retain interaction dismissal and migrate existing settings to the 15-second default.
+- [X] T062 Show the supplied localized preservation message beneath the Tax Free from Planet logo, cycling one active language per preservation activation.
+- [X] T063 Resume normal language rotation from the locale used by the completed preservation mode and measure cycles from that locale.
 
 ---
 

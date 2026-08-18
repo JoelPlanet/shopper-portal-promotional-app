@@ -206,7 +206,8 @@ functional across both views.
 2. Verify preservation mode appears for three seconds before the QR display.
 3. Reload and click or tap during those three seconds; verify the normal display
    returns immediately.
-4. Leave the shopper display untouched for five minutes.
+4. In settings, choose **After X minutes** and set the value to **5**. Leave
+   the shopper display untouched for five minutes.
 5. Verify the standard UI fades to a full-screen black background showing only
    the centred Tax Free from Planet logo.
 6. Verify configured language rotation does not advance while this mode is active.
@@ -214,13 +215,32 @@ functional across both views.
 8. Wait for preservation mode again, then dismiss it separately with a click or
    touch, mouse movement, and key press.
 9. Verify each interaction immediately begins restoring the standard display.
-10. Confirm Restore defaults in settings and verify preservation mode appears
-    for three seconds before all languages begin rotating every 15 seconds.
+10. Configure **After X cycles** with a value of **1**, then verify preservation
+   begins when language rotation completes one full cycle. Confirm Restore
+   defaults in settings and verify preservation mode appears for three seconds
+   before all languages begin rotating every 15 seconds with the trigger reset
+   to five minutes.
+11. Set **Screen preservation duration** to **5 seconds**, wait for the next
+   preservation mode, and verify it returns after five seconds. Set it to
+   **30 seconds**, then click or tap while active and verify it dismisses
+   immediately.
+12. Configure English and French as the active languages. Verify the first
+   preservation screen shows the English preservation message below the Tax
+   Free from Planet logo, the next shows French, and the following screen
+   returns to English.
+13. Configure English, French, and Spanish with cycle triggering. After a
+   preservation screen uses French, verify the standard display continues with
+   French, then Spanish, then English before the next cycle completes.
 
 **Expected outcome**: Startup and Restore defaults show a dismissible three-second
-preservation screen. Periodic timing remains fixed at five minutes and 15 seconds,
-transitions take approximately one second without flashing, no page reload or
-state loss occurs, and interaction restarts the five-minute interval.
+preservation screen. The selected cycle or time trigger launches a 15-second
+periodic screen by default; administrators can choose five-second steps from
+five to 30 seconds. Transitions take approximately one second without flashing,
+no page reload or state loss occurs, and interaction resets the active trigger.
+The message beneath the Tax Free from Planet logo uses one active language per
+preservation activation and cycles through the configured language order.
+After preservation ends, the main display starts from that same language before
+rotating through each remaining active language.
 
 ---
 

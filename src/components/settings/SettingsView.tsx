@@ -6,6 +6,7 @@ import { DEFAULT_CONFIGURATION } from '@/config/defaults'
 import { useConfiguration } from '@/hooks/useConfiguration'
 import { LanguageSelector } from './LanguageSelector'
 import { RotationIntervalPicker } from './RotationIntervalPicker'
+import { ScreenPreservationTriggerPicker } from './ScreenPreservationTriggerPicker'
 import './SettingsView.css'
 
 export function SettingsView() {
@@ -15,8 +16,10 @@ export function SettingsView() {
   const [pending, setPending] = useState<DisplayConfiguration>({ ...config })
   const [saved, setSaved] = useState(false)
   const [confirmReset, setConfirmReset] = useState(false)
+  const [isTriggerValueValid, setIsTriggerValueValid] = useState(true)
 
   const handleSave = () => {
+    if (!isTriggerValueValid) return
     save(pending)
     setSaved(true)
     setTimeout(() => navigate('/'), 800)
@@ -57,6 +60,27 @@ export function SettingsView() {
           />
         )}
 
+        <ScreenPreservationTriggerPicker
+          value={pending.screenPreservationTrigger}
+          onChange={(screenPreservationTrigger) =>
+            setPending((current) => ({ ...current, screenPreservationTrigger }))
+          }
+          onValidityChange={setIsTriggerValueValid}
+        />
+
+        <RotationIntervalPicker
+          value={pending.screenPreservationDurationSeconds}
+          onChange={(screenPreservationDurationSeconds) =>
+            setPending((current) => ({ ...current, screenPreservationDurationSeconds }))
+          }
+          label="Screen preservation duration"
+          inputLabel="Screen preservation duration in seconds"
+          decreaseLabel="Decrease screen preservation duration"
+          increaseLabel="Increase screen preservation duration"
+          minSeconds={5}
+          maxSeconds={30}
+        />
+
         {/* Show defaults hint when only one language is active */}
         {pending.selectedLocales.length === 1 && (
           <p className="settings-note">
@@ -76,7 +100,7 @@ export function SettingsView() {
           type="button"
           className="settings-btn settings-btn--primary"
           onClick={handleSave}
-          disabled={saved}
+          disabled={saved || !isTriggerValueValid}
         >
           {saved ? 'Saved ✓' : 'Save'}
         </button>

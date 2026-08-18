@@ -14,8 +14,22 @@ describe('ScreenPreservationMode', () => {
   })
 
   it('is hidden from assistive technology when inactive', () => {
-    const { container } = render(<ScreenPreservationMode isActive={false} />)
+    const { container } = render(<ScreenPreservationMode isActive={false} locale="en" />)
 
     expect(container.firstElementChild?.getAttribute('aria-hidden')).toBe('true')
+  })
+
+  it('shows the supplied locale message beneath the logo', () => {
+    render(<ScreenPreservationMode isActive locale="fr" />)
+
+    expect(screen.getByText('Obtenez votre remboursement de détaxe ici')).toBeTruthy()
+  })
+
+  it('marks the Arabic message for a right-to-left wipe', () => {
+    render(<ScreenPreservationMode isActive locale="ar" />)
+
+    expect(screen.getByText('احصل على استرداد الضريبة هنا').classList).toContain(
+      'screen-preservation__message--rtl',
+    )
   })
 })

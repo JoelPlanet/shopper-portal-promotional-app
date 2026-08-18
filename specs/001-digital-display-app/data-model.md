@@ -27,6 +27,15 @@ interface DisplayConfiguration {
    * Minimum: 5 (enforced on save). Ignored when selectedLocales.length === 1.
    */
   rotationIntervalSeconds: number;
+
+  /** Exactly one persisted method for triggering screen preservation. */
+  screenPreservationTrigger: {
+    type: 'cycles' | 'minutes';
+    value: number;
+  };
+
+  /** How long periodic preservation mode remains visible. */
+  screenPreservationDurationSeconds: number;
 }
 ```
 
@@ -36,6 +45,8 @@ interface DisplayConfiguration {
 const DEFAULT_CONFIGURATION: DisplayConfiguration = {
   selectedLocales: ['en', 'zh-CN', 'ar', 'fr', 'es', 'pt'],
   rotationIntervalSeconds: 15,
+  screenPreservationTrigger: { type: 'minutes', value: 5 },
+  screenPreservationDurationSeconds: 15,
 };
 ```
 
@@ -43,6 +54,12 @@ const DEFAULT_CONFIGURATION: DisplayConfiguration = {
 - `selectedLocales` must contain at least one entry from `LANGUAGE_CATALOGUE`
 - `selectedLocales` entries must all be valid `LocaleCode` values
 - `rotationIntervalSeconds` must be an integer ≥ 5
+- `screenPreservationTrigger.type` must be `cycles` or `minutes`
+- `screenPreservationTrigger.value` must be a positive integer
+- saved configurations without `screenPreservationTrigger` migrate to
+  `{ type: 'minutes', value: 5 }`
+- `screenPreservationDurationSeconds` must be one of `5`, `10`, `15`, `20`,
+  `25`, or `30`; saved configurations without it migrate to `15`
 
 ---
 
@@ -173,16 +190,26 @@ index when the standard display returns.
   RESTORE DEFAULTS -------------> PRESERVING (3 seconds)
                                       |
                                       v
-  STANDARD -- 5 minutes --> PRESERVING -- 15 seconds --> STANDARD
+  STANDARD -- configured trigger --> PRESERVING -- 15 seconds --> STANDARD
       ^                          |
       |                          |
       +---- any interaction -----+
 
-Entering and leaving PRESERVING uses an approximately one-second opacity
-transition. Click, touch, mouse movement, or key press dismisses either the
-three-second introductory mode or the periodic mode. Returning to STANDARD
-starts a new five-minute interval. State is runtime-only and does not modify
-DisplayConfiguration or localStorage.
+In cycle mode, the trigger advances when rotation wraps from the final language
+back to the first. In time mode, it advances while the standard display is
+visible. Entering and leaving PRESERVING uses an approximately one-second
+opacity transition. Click, touch, mouse movement, or key press dismisses either
+the three-second introductory mode or the periodic mode. Returning to STANDARD
+resets the active trigger. Trigger configuration is persisted as part of
+DisplayConfiguration; counters and timers are runtime-only.
+
+The preservation overlay shows the Tax Free from Planet logo followed by the
+`screenPreservationText` translation. It uses one configured active language per
+preservation activation, advancing through the selected language order and
+wrapping to the first after the last. This overlay-specific sequence is runtime
+only. When preservation ends, the standard display restarts from the locale used
+by that preservation overlay. A normal display cycle is complete when every
+active language has been shown and rotation returns to that restarted locale.
 ```
 
 ### Settings Access State Machine

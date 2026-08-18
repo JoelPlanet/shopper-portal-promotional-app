@@ -1,8 +1,15 @@
 export type LocaleCode = 'en' | 'zh-CN' | 'ar' | 'fr' | 'es' | 'pt'
 
+export interface ScreenPreservationTrigger {
+  type: 'cycles' | 'minutes'
+  value: number
+}
+
 export interface DisplayConfiguration {
   selectedLocales: LocaleCode[]
   rotationIntervalSeconds: number
+  screenPreservationTrigger: ScreenPreservationTrigger
+  screenPreservationDurationSeconds: number
 }
 
 export interface LanguageCatalogueEntry {

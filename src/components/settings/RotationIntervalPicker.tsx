@@ -3,21 +3,39 @@ const MIN_SECONDS = 5
 interface Props {
   value: number
   onChange: (seconds: number) => void
+  label?: string
+  inputLabel?: string
+  decreaseLabel?: string
+  increaseLabel?: string
+  minSeconds?: number
+  maxSeconds?: number
 }
 
-export function RotationIntervalPicker({ value, onChange }: Props) {
-  const clamp = (n: number) => Math.max(MIN_SECONDS, Math.round(n))
+export function RotationIntervalPicker({
+  value,
+  onChange,
+  label = 'Rotation interval',
+  inputLabel = 'Rotation interval in seconds',
+  decreaseLabel = 'Decrease interval',
+  increaseLabel = 'Increase interval',
+  minSeconds = MIN_SECONDS,
+  maxSeconds,
+}: Props) {
+  const clamp = (seconds: number) => {
+    const steppedValue = Math.round(seconds / 5) * 5
+    return Math.min(maxSeconds ?? Infinity, Math.max(minSeconds, steppedValue))
+  }
 
   return (
     <fieldset className="interval-picker">
-      <legend className="settings-field-label">Rotation interval</legend>
+      <legend className="settings-field-label">{label}</legend>
       <div className="interval-controls">
         <button
           type="button"
           className="interval-btn"
           onClick={() => onChange(clamp(value - 5))}
-          aria-label="Decrease interval"
-          disabled={value <= MIN_SECONDS}
+          aria-label={decreaseLabel}
+          disabled={value <= minSeconds}
         >
           −
         </button>
@@ -25,23 +43,26 @@ export function RotationIntervalPicker({ value, onChange }: Props) {
           type="number"
           className="interval-input"
           value={value}
-          min={MIN_SECONDS}
+          min={minSeconds}
+          max={maxSeconds}
+          step="5"
           onChange={(e) => onChange(clamp(Number(e.target.value)))}
           onBlur={(e) => onChange(clamp(Number(e.target.value)))}
-          aria-label="Rotation interval in seconds"
+          aria-label={inputLabel}
         />
         <button
           type="button"
           className="interval-btn"
           onClick={() => onChange(clamp(value + 5))}
-          aria-label="Increase interval"
+          aria-label={increaseLabel}
+          disabled={maxSeconds !== undefined && value >= maxSeconds}
         >
           +
         </button>
         <span className="interval-unit">seconds</span>
       </div>
-      {value <= MIN_SECONDS && (
-        <p className="interval-note">Minimum interval is {MIN_SECONDS} seconds</p>
+      {value <= minSeconds && (
+        <p className="interval-note">Minimum interval is {minSeconds} seconds</p>
       )}
     </fieldset>
   )

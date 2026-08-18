@@ -30,4 +30,45 @@ describe('useLanguageRotation', () => {
     act(() => vi.advanceTimersByTime(5000))
     expect(result.current.activeLocale).toBe('en')
   })
+
+  it('counts a completed cycle when rotation returns to the first language', () => {
+    const selectedLocales: LocaleCode[] = ['en', 'fr']
+    const { result } = renderHook(() => useLanguageRotation({
+      selectedLocales,
+      rotationIntervalSeconds: 5,
+    }))
+
+    act(() => vi.advanceTimersByTime(5000))
+    expect(result.current.completedCycles).toBe(0)
+
+    act(() => vi.advanceTimersByTime(5000))
+    expect(result.current.completedCycles).toBe(1)
+    expect(result.current.activeLocale).toBe('en')
+  })
+
+  it('restarts from the preservation locale and completes a cycle after every active language', () => {
+    const selectedLocales: LocaleCode[] = ['en', 'fr', 'es']
+    const { result, rerender } = renderHook(
+      ({ startLocale }) => useLanguageRotation({
+        selectedLocales,
+        rotationIntervalSeconds: 5,
+        startLocale,
+      }),
+      { initialProps: { startLocale: 'en' as LocaleCode } },
+    )
+
+    rerender({ startLocale: 'fr' })
+    expect(result.current.activeLocale).toBe('fr')
+
+    act(() => vi.advanceTimersByTime(5000))
+    expect(result.current.activeLocale).toBe('es')
+
+    act(() => vi.advanceTimersByTime(5000))
+    expect(result.current.activeLocale).toBe('en')
+    expect(result.current.completedCycles).toBe(0)
+
+    act(() => vi.advanceTimersByTime(5000))
+    expect(result.current.activeLocale).toBe('fr')
+    expect(result.current.completedCycles).toBe(1)
+  })
 })

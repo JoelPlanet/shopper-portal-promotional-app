@@ -30,10 +30,38 @@
   transition: opacity 0s;
 }
 
+.screen-preservation__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(84vw, 48rem);
+}
+
 .screen-preservation__logo {
   width: min(70vw, 38.75rem);
   max-height: 40dvh;
   object-fit: contain;
+}
+
+.screen-preservation__message {
+  margin-top: clamp(4rem, 12dvh, 10rem);
+  color: #fff;
+  font-family: var(--app-font-family);
+  font-size: clamp(1.5rem, 3.5vw, 3rem);
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: center;
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  will-change: clip-path, opacity;
+}
+
+.screen-preservation--active .screen-preservation__message {
+  animation: screen-preservation-message-wipe-ltr 600ms 1.7s ease-out forwards;
+}
+
+.screen-preservation--active .screen-preservation__message--rtl {
+  animation-name: screen-preservation-message-wipe-rtl;
 }
 
 .screen-preservation--periodic .screen-preservation__logo {
@@ -56,6 +84,28 @@
   }
 }
 
+@keyframes screen-preservation-message-wipe-ltr {
+  from {
+    opacity: 1;
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes screen-preservation-message-wipe-rtl {
+  from {
+    opacity: 1;
+    clip-path: inset(0 0 0 100%);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .screen-preservation,
   .screen-preservation--active {
@@ -66,5 +116,11 @@
     animation: none;
     opacity: 1;
     transform: scale(1);
+  }
+
+  .screen-preservation--active .screen-preservation__message {
+    animation: none;
+    opacity: 1;
+    clip-path: none;
   }
 }

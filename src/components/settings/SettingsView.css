@@ -2,12 +2,13 @@
 .settings-view {
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
+  height: 100dvh;
   background: #f5f5f5;
   color: #111;
   font-family: var(--app-font-family);
   direction: ltr;
   padding: clamp(1rem, 3vw, 2.5rem);
+  overflow: hidden;
 }
 
 .settings-header {
@@ -32,9 +33,13 @@
 
 .settings-body {
   flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 0.5rem;
 }
 
 /* Shared field label style */
@@ -160,6 +165,82 @@
   margin-top: 0.4rem;
 }
 
+/* ─── Screen Preservation Trigger ───────────────────── */
+.screen-preservation-trigger {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.trigger-intro,
+.trigger-help,
+.trigger-error {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.trigger-intro,
+.trigger-help {
+  color: #666;
+}
+
+.trigger-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  margin: 1rem 0;
+}
+
+.trigger-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #222;
+  cursor: pointer;
+}
+
+.trigger-option input {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: 0;
+  accent-color: #003087;
+}
+
+.trigger-value-label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.trigger-value-input {
+  width: min(100%, 8rem);
+  font: inherit;
+  font-size: 1.1rem;
+  padding: 0.55rem 0.65rem;
+  border: 2px solid #ccc;
+  border-radius: 0.5rem;
+}
+
+.trigger-value-input:focus {
+  outline: none;
+  border-color: #0066cc;
+}
+
+.trigger-value-input[aria-invalid='true'] {
+  border-color: #b42318;
+}
+
+.trigger-help {
+  max-width: 46rem;
+  margin-top: 0.5rem;
+}
+
+.trigger-error {
+  color: #b42318;
+  margin-top: 0.5rem;
+}
+
 /* ─── Notes ─────────────────────────────────────────── */
 .settings-note {
   font-size: 0.9rem;
@@ -180,6 +261,7 @@
 
 /* ─── Footer buttons ─────────────────────────────────── */
 .settings-footer {
+  flex-shrink: 0;
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;

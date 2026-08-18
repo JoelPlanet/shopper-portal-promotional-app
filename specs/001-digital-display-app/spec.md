@@ -155,12 +155,13 @@ rotation continues, and the QR code remains visible and scannable for at least
 The unattended display periodically replaces the QR experience with a black
 screen containing only the centred Tax Free from Planet logo. This temporary
 mode reduces prolonged display of static high-contrast content without losing
-application state or requiring deployment-specific configuration.
+application state. Administrators choose whether it begins after a number of
+complete promotional content cycles or elapsed minutes.
 
-**Independent Test**: Leave the shopper display untouched for five minutes.
-Verify it fades to the preservation screen for 15 seconds, then fades back to
-the unchanged QR experience. Repeat and interact during preservation mode to
-verify the display restores immediately.
+**Independent Test**: Configure each trigger method in turn. Verify the screen
+preserves after the selected number of complete content cycles or minutes, then
+fades back to the unchanged QR experience. Repeat and interact during
+preservation mode to verify the display restores immediately.
 
 **Acceptance Scenarios**:
 
@@ -170,15 +171,18 @@ verify the display restores immediately.
 2. **Given** an administrator confirms Restore defaults, **When** the display
   returns, **Then** preservation mode is shown for three seconds before the
   normal QR experience appears.
-3. **Given** the shopper display has remained active for five minutes, **When**
-  the preservation interval elapses, **Then** the normal UI fades to a black
+3. **Given** a time trigger is configured, **When** its selected number of
+  minutes elapses, **Then** the normal UI fades to a black
   full-screen view containing only the centred Tax Free from Planet logo.
-4. **Given** periodic preservation mode is active, **When** 15 seconds elapse, **Then**
+4. **Given** a cycle trigger is configured, **When** its selected number of
+  complete promotional content cycles finishes, **Then** the normal UI fades
+  to preservation mode.
+5. **Given** periodic preservation mode is active, **When** 15 seconds elapse, **Then**
   the display fades back to the standard QR experience without reloading.
-5. **Given** preservation mode is active, **When** a user touches, clicks,
+6. **Given** preservation mode is active, **When** a user touches, clicks,
   moves the mouse, or presses a key, **Then** preservation mode is dismissed
-  immediately and its five-minute interval restarts.
-6. **Given** language rotation is configured, **When** preservation mode is
+  immediately and the active trigger restarts.
+7. **Given** language rotation is configured, **When** preservation mode is
   active, **Then** rotation pauses and resumes from the current language after
   the standard display returns.
 
@@ -203,8 +207,7 @@ verify the display restores immediately.
   aspect ratio? — Content must scale and remain legible without distortion or
   unconstrained stretching.
 - What happens when interaction dismisses preservation mode? — The standard
-  display returns immediately and the next five-minute interval starts from
-  the dismissal time.
+  display returns immediately and the active trigger starts again.
 
 ---
 
@@ -258,8 +261,9 @@ verify the display restores immediately.
 
 **Screen Preservation**
 
-- **FR-032**: The shopper display MUST enter screen preservation mode after
-  every five uninterrupted minutes of standard display operation.
+- **FR-032**: The administrator MUST be able to choose exactly one screen
+  preservation trigger: a positive whole number of complete promotional content
+  cycles or a positive whole number of minutes.
 - **FR-033**: Preservation mode MUST show a full-screen black background with
   only the Tax Free from Planet logo centred horizontally and vertically.
 - **FR-034**: Preservation mode MUST last 15 seconds and return to the standard
@@ -267,11 +271,14 @@ verify the display restores immediately.
 - **FR-035**: Entering and leaving preservation mode MUST use a smooth fade of
   approximately one second without flashing.
 - **FR-036**: Touch, click, mouse movement, or key press MUST immediately
-  dismiss preservation mode and restart its five-minute interval.
+  dismiss preservation mode and reset the active trigger.
 - **FR-037**: Language rotation MUST pause during preservation mode and resume
   from the current language when the normal display returns.
-- **FR-038**: Preservation timing MUST be hard-coded and identical across all
-  deployments, with no administrator configuration.
+- **FR-038**: The selected trigger and its value MUST persist in local storage,
+  take effect after save, and default to five minutes when absent from an
+  existing saved configuration.
+- **FR-040**: Preservation trigger values MUST be non-empty positive whole
+  numbers. Invalid values MUST not be saved.
 - **FR-039**: On initial application load and immediately after Restore
   defaults, preservation mode MUST be shown for three seconds and remain
   dismissible by the supported interaction events.
@@ -340,9 +347,10 @@ verify the display restores immediately.
   layout adjustment.
 - **SC-008**: The administration area and all shopper-facing content meet
   WCAG 2.2 AA accessibility standards.
-- **SC-009**: Preservation mode enters after five minutes, remains for 15
-  seconds, and responds to user interaction consistently across supported
-  kiosk, tablet, TV, desktop, and full-screen browser deployments.
+- **SC-009**: Preservation mode enters after the configured number of cycles
+  or minutes, remains for 15 seconds, and responds to user interaction
+  consistently across supported kiosk, tablet, TV, desktop, and full-screen
+  browser deployments.
 - **SC-010**: Initial load and Restore defaults show preservation mode for
   three seconds before displaying all supported languages on a 15-second cycle.
 
@@ -378,8 +386,8 @@ verify the display restores immediately.
   configuration; offline mode activates only after a successful initial load.
 - The application is deployed as a hosted web application accessed via a URL;
   no native installation is required on display devices.
-- The display operates continuously and uses the fixed preservation cycle
-  defined in FR-032 through FR-038; this cycle is not user-configurable.
+- Existing deployments without a saved preservation trigger use a five-minute
+  time trigger, preserving the behaviour from earlier versions.
 - All promotional copy, translations, and Shopper Portal imagery are managed by
   Planet and deployed as part of the application. Administrators can choose
   which languages are active but cannot edit translation content.
