@@ -182,7 +182,26 @@ On config change: reset currentIndex to 0, restart timer with new interval.
 On connectivity loss: no state change; timer continues unaffected.
 On screen preservation: pause the timer at the current index; resume from that
 index when the standard display returns.
+On temporary language override: pause the timer while the override is active;
+when the 20-second override expires, restart from the first configured active
+language.
 ```
+
+### Temporary Language Override State
+
+```typescript
+interface TemporaryLanguageOverrideState {
+  /** Runtime-only selected locale, never persisted to DisplayConfiguration. */
+  overrideLocale: LocaleCode | null;
+  /** Fixed duration for each shopper-selected temporary language. */
+  durationMs: 20000;
+}
+```
+
+The state is transient display state only. Starting a new override clears the
+previous timer, switches immediately to the newest selected language, and starts
+a fresh 20-second timer. Expiry clears `overrideLocale`; it does not write to
+`localStorage` or mutate `selectedLocales`.
 
 ### Screen Preservation State Machine
 

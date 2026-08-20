@@ -8,6 +8,7 @@ interface Options {
   rotationIntervalSeconds: number
   isPaused?: boolean
   startLocale?: LocaleCode
+  resetKey?: unknown
   onCycleComplete?: () => void
 }
 
@@ -16,6 +17,7 @@ export function useLanguageRotation({
   rotationIntervalSeconds,
   isPaused = false,
   startLocale = selectedLocales[0],
+  resetKey,
   onCycleComplete,
 }: Options) {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -33,7 +35,7 @@ export function useLanguageRotation({
   useEffect(() => {
     setActiveIndex(startIndex)
     setCompletedCycles(0)
-  }, [selectedLocales, startIndex])
+  }, [selectedLocales, startIndex, resetKey])
 
   // Start/restart the rotation timer
   useEffect(() => {

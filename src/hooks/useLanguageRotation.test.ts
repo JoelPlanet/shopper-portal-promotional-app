@@ -71,4 +71,27 @@ describe('useLanguageRotation', () => {
     expect(result.current.activeLocale).toBe('fr')
     expect(result.current.completedCycles).toBe(1)
   })
+
+  it('resets to the requested start locale when resetKey changes', () => {
+    const selectedLocales: LocaleCode[] = ['en', 'fr', 'es']
+    const { result, rerender } = renderHook(
+      ({ isPaused, resetKey }) => useLanguageRotation({
+        selectedLocales,
+        rotationIntervalSeconds: 5,
+        isPaused,
+        startLocale: 'en',
+        resetKey,
+      }),
+      { initialProps: { isPaused: false, resetKey: 0 } },
+    )
+
+    act(() => vi.advanceTimersByTime(5000))
+    expect(result.current.activeLocale).toBe('fr')
+
+    rerender({ isPaused: true, resetKey: 0 })
+    rerender({ isPaused: false, resetKey: 1 })
+
+    expect(result.current.activeLocale).toBe('en')
+    expect(result.current.completedCycles).toBe(0)
+  })
 })

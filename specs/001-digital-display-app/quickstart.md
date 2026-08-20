@@ -244,6 +244,31 @@ rotating through each remaining active language.
 
 ---
 
+## Validation Scenario 8: Temporary Language Selection
+
+1. In settings, configure English and French as the only active languages and
+   save.
+2. On the display, press the bottom-left language icon.
+3. Verify the picker lists every supported language, including languages not in
+   the active admin rotation.
+4. Select Italian and verify the display switches to Italian immediately.
+5. Wait 19 seconds and verify Italian remains fixed on screen.
+6. Before expiry, open the picker again, select Arabic, and verify the display
+   switches immediately and starts a fresh 20-second period.
+7. After 20 seconds, verify the display returns to English and then continues
+   the configured English/French rotation.
+8. Verify `localStorage.ndsk:config` still contains only the admin-selected
+   active languages.
+9. Listen for the `shopper-portal-display-analytics` browser event and verify
+   one event is emitted when the picker opens and one event is emitted when a
+   temporary language is selected.
+
+**Expected outcome**: Temporary language selection is instant, non-persistent,
+pauses normal rotation for 20 seconds, supports repeated selections, and then
+restarts the configured active-language cycle from the beginning.
+
+---
+
 ## Build Validation
 
 Before any deployment, run the full build to confirm no TypeScript errors and

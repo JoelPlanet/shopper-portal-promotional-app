@@ -183,6 +183,23 @@ shown instead of browser error.
 
 ---
 
+## Phase 9: Temporary Language Selection
+
+**Purpose**: Let shoppers temporarily view any supported language without changing administrator configuration or the configured rotation cycle.
+
+- [X] T064 Add runtime-only temporary language override timer coverage in `src/hooks/useTemporaryLanguageOverride.test.ts`
+- [X] T065 Create `src/hooks/useTemporaryLanguageOverride.ts` with 20-second expiry, latest-selection-wins reset, and unmount cleanup
+- [X] T066 Extend `src/hooks/useLanguageRotation.ts` and `src/hooks/useLanguageRotation.test.ts` with an explicit reset signal so override expiry restarts configured rotation from the first active language
+- [X] T067 Create `src/components/display/TemporaryLanguageSelector.tsx` and `src/components/display/TemporaryLanguageSelector.test.tsx` with a bottom-left accessible full-catalogue picker and local analytics events
+- [X] T068 Add `src/analytics/displayAnalytics.ts` for picker-open and language-selected browser analytics events
+- [X] T069 Integrate temporary selection in `src/pages/DisplayPage.tsx` and `src/components/display/DisplayView.tsx`, pausing rotation during override and keeping screen preservation locale compatible
+- [X] T070 Style the display language control and picker in `src/components/display/DisplayView.css` with unobtrusive placement, 44px touch target, and responsive/focus states
+- [X] T071 Add `src/pages/DisplayPage.test.tsx` coverage proving temporary selection does not mutate active-language settings and configured rotation restarts from the beginning after expiry
+
+**Checkpoint**: Shoppers can open the globe control, pick any supported language, see it for 20 seconds, make another selection to reset the timer, and return to the admin-configured language rotation without persistence.
+
+---
+
 ## Dependency Graph
 
 ```

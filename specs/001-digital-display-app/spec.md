@@ -72,6 +72,43 @@ displays for the configured duration, and transitions smoothly to the next.
 
 ---
 
+### User Story 2A — Shopper Temporarily Selects a Language (Priority: P2)
+
+A shopper standing in front of the display can open a discreet language picker
+from the bottom-left corner and immediately view the promotional content in any
+supported language, even if that language is not part of the administrator's
+active rotation. The selection is temporary and never changes saved settings.
+
+**Why this priority**: Language rotation helps passive discovery, but a shopper
+who needs a specific language should not have to wait for the configured cycle.
+Temporary selection improves comprehension while preserving administrator
+control over the default rotation.
+
+**Independent Test**: Configure English and French as the active languages.
+From the display, open the bottom-left language picker and select Italian.
+Verify Italian appears immediately for 20 seconds, rotation pauses, then the
+display returns to English and continues the configured English/French cycle.
+
+**Acceptance Scenarios**:
+
+1. **Given** the shopper display is active, **When** the shopper presses the
+  bottom-left language icon, **Then** a picker opens with every supported
+  language in the application catalogue.
+2. **Given** the picker is open, **When** the shopper selects a language,
+  **Then** the picker closes and the display content switches immediately to
+  that language.
+3. **Given** a temporary language is active, **When** 20 seconds have not yet
+  elapsed, **Then** normal rotation remains paused and the selected language
+  remains fixed on screen.
+4. **Given** a temporary language is active, **When** the shopper selects a
+  different language, **Then** the newest language is shown immediately and a
+  fresh 20-second period begins.
+5. **Given** the temporary language period expires, **When** the display returns
+  to normal rotation, **Then** the configured active-language cycle restarts
+  from its first configured language and ignores the temporary selection.
+
+---
+
 ### User Story 3 — Administrator Configures the Display Experience (Priority: P3)
 
 An administrator — a merchant, shopping centre manager, or other authorised
@@ -258,6 +295,20 @@ preservation mode to verify the display restores immediately.
   language continuously without rotation.
 - **FR-013**: Language rotation interval MUST be configurable and MUST enforce
   a minimum interval of at least 5 seconds.
+- **FR-041**: The shopper-facing display MUST provide a discreet bottom-left
+  language picker trigger with an accessible touch target of at least 44px by
+  44px.
+- **FR-042**: The temporary language picker MUST display every supported
+  language in the application catalogue, regardless of the active languages
+  configured by an administrator.
+- **FR-043**: Selecting a temporary language MUST immediately switch displayed
+  content to that language for 20 seconds, pause configured rotation during
+  that period, and allow a newer selection to restart the 20-second period.
+- **FR-044**: When a temporary language override expires, the display MUST
+  restart normal rotation from the first configured active language without
+  modifying or persisting administrator settings.
+- **FR-045**: The application MUST generate analytics events when the temporary
+  language picker opens and when a temporary language is selected.
 
 **Screen Preservation**
 
@@ -353,6 +404,9 @@ preservation mode to verify the display restores immediately.
   browser deployments.
 - **SC-010**: Initial load and Restore defaults show preservation mode for
   three seconds before displaying all supported languages on a 15-second cycle.
+- **SC-011**: A shopper can select any supported language from the display,
+  see it immediately for 20 seconds, and then observe normal configured
+  rotation restart from the first active language with no settings change.
 
 ---
 

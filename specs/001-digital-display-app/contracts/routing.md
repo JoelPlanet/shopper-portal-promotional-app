@@ -28,6 +28,9 @@ displayed in the bottom-right corner. Requires no shopper interaction.
 - On mount: reads `DisplayConfiguration` from `localStorage`; falls back to
   defaults if none is saved.
 - Starts language rotation timer if `selectedLocales.length > 1`.
+- Shows a bottom-left temporary language picker containing every supported
+  locale. Temporary selections are runtime-only, last 20 seconds, pause normal
+  rotation, and then restart configured rotation from the first active locale.
 - Continues rendering from cached assets if network is unavailable.
 
 **URL query parameters**: None consumed. The route itself has no parameters.

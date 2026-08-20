@@ -1,13 +1,15 @@
 import type { LocaleCode } from '@/config/languages'
 import { LanguageSlide } from './LanguageSlide'
 import { HeroImage } from './HeroImage'
+import { TemporaryLanguageSelector } from './TemporaryLanguageSelector'
 import './DisplayView.css'
 
 interface Props {
   activeLocale: LocaleCode
+  onTemporaryLanguageSelect: (locale: LocaleCode) => void
 }
 
-export function DisplayView({ activeLocale }: Props) {
+export function DisplayView({ activeLocale, onTemporaryLanguageSelect }: Props) {
   return (
     <main className="display-view">
       {/* Planet logo — language-invariant, centred at top */}
@@ -29,6 +31,11 @@ export function DisplayView({ activeLocale }: Props) {
 
       {/* Localised supporting text below the hero image */}
       <LanguageSlide key={`${activeLocale}-subheading`} locale={activeLocale} slot="subheading" />
+
+      <TemporaryLanguageSelector
+        activeLocale={activeLocale}
+        onSelect={onTemporaryLanguageSelect}
+      />
     </main>
   )
 }
