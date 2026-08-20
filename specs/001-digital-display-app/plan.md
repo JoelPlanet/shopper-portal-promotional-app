@@ -126,7 +126,8 @@ src/
 │       ├── ar.json                   # RTL — requires layout mirroring
 │       ├── fr.json
 │       ├── es.json
-│       └── pt.json
+│       ├── pt.json
+│       └── it.json
 ├── pages/
 │   ├── DisplayPage.tsx               # Route: /
 │   └── SettingsPage.tsx              # Route: /settings

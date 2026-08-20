@@ -34,7 +34,7 @@
   align-items: center;
   justify-content: center;
   font-size: var(--fitted-font-size, var(--slot-font-size));
-  font-weight: 400;
+  font-weight: 300;
   text-align: center;
   line-height: 1.3;
   height: calc(3.9 * var(--slot-font-size));

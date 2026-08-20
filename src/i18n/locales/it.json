@@ -1,10 +1,10 @@
 {
-  "headline": "Scan the QR code to request and track your refund",
-  "subheading": "Shopping Tax Free is easier with Shopper Portal",
-  "qrCallToAction": "Scan the QR code",
-  "screenPreservationText": "Claim your Tax Free refund now",
+  "headline": "Scansiona il codice QR per richiedere e monitorare il tuo rimborso",
+  "subheading": "Lo shopping Tax Free è più semplice con Shopper Portal",
+  "qrCallToAction": "Scansiona il codice QR",
+  "screenPreservationText": "Richiedi subito il tuo rimborso Tax Free",
   "shopperPortalName": "Shopper Portal",
-  "heroImageAltText": "Shopper Portal app with tax refund QR code",
+  "heroImageAltText": "App Shopper Portal con codice QR per il rimborso fiscale",
   "settings": {
     "title": "Display Settings",
     "pinPrompt": "Enter PIN to access settings",

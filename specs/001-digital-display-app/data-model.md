@@ -43,7 +43,7 @@ interface DisplayConfiguration {
 
 ```typescript
 const DEFAULT_CONFIGURATION: DisplayConfiguration = {
-  selectedLocales: ['en', 'zh-CN', 'ar', 'fr', 'es', 'pt'],
+  selectedLocales: ['en', 'zh-CN', 'ar', 'fr', 'es', 'pt', 'it'],
   rotationIntervalSeconds: 15,
   screenPreservationTrigger: { type: 'minutes', value: 5 },
   screenPreservationDurationSeconds: 15,
@@ -89,9 +89,10 @@ const LANGUAGE_CATALOGUE: LanguageCatalogueEntry[] = [
   { code: 'fr',    label: 'Français',  direction: 'ltr' },
   { code: 'es',    label: 'Español',   direction: 'ltr' },
   { code: 'pt',    label: 'Português', direction: 'ltr' },
+  { code: 'it',    label: 'Italiano',  direction: 'ltr' },
 ];
 
-type LocaleCode = 'en' | 'zh-CN' | 'ar' | 'fr' | 'es' | 'pt';
+type LocaleCode = 'en' | 'zh-CN' | 'ar' | 'fr' | 'es' | 'pt' | 'it';
 ```
 
 ---

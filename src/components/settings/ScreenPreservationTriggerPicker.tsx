@@ -8,8 +8,8 @@ interface Props {
 }
 
 const HELP_TEXT = {
-  cycles: 'Screen Preservation Mode will be shown after this many complete promotional content cycles.',
-  minutes: 'Screen Preservation Mode will be shown after this many minutes.',
+  cycles: 'Rest screen will be shown after this many complete language cycles.',
+  minutes: 'Rest screen will be shown after this many minutes.',
 } as const
 
 function isValidPositiveWholeNumber(value: string): boolean {
@@ -44,8 +44,8 @@ export function ScreenPreservationTriggerPicker({ value, onChange, onValidityCha
 
   return (
     <fieldset className="screen-preservation-trigger">
-      <legend className="settings-field-label">Screen Preservation Trigger</legend>
-      <p className="trigger-intro">Choose one method for when Screen Preservation Mode starts.</p>
+      <legend className="settings-field-label">Rest Screen Frequency</legend>
+      <p className="trigger-intro">Choose a method for when the rest screen starts.</p>
 
       <div className="trigger-options">
         <label className="trigger-option">

@@ -73,7 +73,7 @@ export function SettingsView() {
           onChange={(screenPreservationDurationSeconds) =>
             setPending((current) => ({ ...current, screenPreservationDurationSeconds }))
           }
-          label="Screen preservation duration"
+          label="Rest screen duration"
           inputLabel="Screen preservation duration in seconds"
           decreaseLabel="Decrease screen preservation duration"
           increaseLabel="Increase screen preservation duration"

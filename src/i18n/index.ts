@@ -7,6 +7,7 @@ import ar from './locales/ar.json'
 import fr from './locales/fr.json'
 import es from './locales/es.json'
 import pt from './locales/pt.json'
+import it from './locales/it.json'
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -16,6 +17,7 @@ i18n.use(initReactI18next).init({
     fr:    { translation: fr },
     es:    { translation: es },
     pt:    { translation: pt },
+    it:    { translation: it },
   },
   lng: 'en',
   fallbackLng: 'en',

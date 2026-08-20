@@ -14,7 +14,7 @@ interface Props {
 export function RotationIntervalPicker({
   value,
   onChange,
-  label = 'Rotation interval',
+  label = 'Language Display Duration',
   inputLabel = 'Rotation interval in seconds',
   decreaseLabel = 'Decrease interval',
   increaseLabel = 'Increase interval',
@@ -62,7 +62,7 @@ export function RotationIntervalPicker({
         <span className="interval-unit">seconds</span>
       </div>
       {value <= minSeconds && (
-        <p className="interval-note">Minimum interval is {minSeconds} seconds</p>
+        <p className="interval-note">Minimum display time is {minSeconds} seconds</p>
       )}
     </fieldset>
   )

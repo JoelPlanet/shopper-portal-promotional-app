@@ -1,4 +1,4 @@
-export type LocaleCode = 'en' | 'zh-CN' | 'ar' | 'fr' | 'es' | 'pt'
+export type LocaleCode = 'en' | 'zh-CN' | 'ar' | 'fr' | 'es' | 'pt' | 'it'
 
 export interface ScreenPreservationTrigger {
   type: 'cycles' | 'minutes'
@@ -25,4 +25,5 @@ export const LANGUAGE_CATALOGUE: LanguageCatalogueEntry[] = [
   { code: 'fr',    label: 'Français',   direction: 'ltr' },
   { code: 'es',    label: 'Español',    direction: 'ltr' },
   { code: 'pt',    label: 'Português',  direction: 'ltr' },
+  { code: 'it',    label: 'Italiano',   direction: 'ltr' },
 ]

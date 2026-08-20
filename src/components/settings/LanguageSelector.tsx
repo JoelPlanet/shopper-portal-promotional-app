@@ -19,7 +19,7 @@ export function LanguageSelector({ selectedLocales, onChange }: Props) {
 
   return (
     <fieldset className="language-selector">
-      <legend className="settings-field-label">Active languages</legend>
+      <legend className="settings-field-label">Display languages</legend>
       <div className="language-grid">
         {LANGUAGE_CATALOGUE.map(({ code, label }) => {
           const active = selectedLocales.includes(code)

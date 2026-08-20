@@ -112,6 +112,7 @@ bundled at build time. No runtime fetching of translations.
 | `fr`    | French     | LTR              |
 | `es`    | Spanish    | LTR              |
 | `pt`    | Portuguese | LTR              |
+| `it`    | Italian    | LTR              |
 
 Adding a language in future requires adding a JSON file and an entry in the
 catalogue — no other code changes.
