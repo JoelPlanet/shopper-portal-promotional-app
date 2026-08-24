@@ -38,8 +38,8 @@
 }
 
 .screen-preservation__logo {
-  width: min(70vw, 38.75rem);
-  max-height: 40dvh;
+  width: min(47vw, 26rem);
+  max-height: 28dvh;
   object-fit: contain;
 }
 

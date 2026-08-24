@@ -23,8 +23,9 @@
 }
 
 .planet-logo {
-  height: clamp(3rem, 9vmax, 7.5rem);
-  width: auto;
+  width: 200px;
+  height: auto;
+  padding-top: 30px;
 }
 
 /* Localised headline above hero image */
@@ -99,32 +100,27 @@
   height: 3rem;
   min-width: 44px;
   min-height: 44px;
-  border: 1px solid rgba(17, 17, 17, 0.18);
+  border: none;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.7);
-  color: #333;
-  opacity: 0.38;
-  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.08);
+  background: transparent;
+  color: #888;
+  opacity: 0.25;
   cursor: pointer;
   transition:
-    background 0.2s ease,
-    border-color 0.2s ease,
-    opacity 0.2s ease,
-    transform 0.2s ease;
+    opacity 0.2s ease;
 }
 
 .temporary-language__trigger:hover,
 .temporary-language__trigger:focus-visible,
 .temporary-language__trigger[aria-expanded="true"] {
-  background: rgba(255, 255, 255, 0.94);
-  border-color: rgba(0, 48, 135, 0.5);
-  opacity: 0.82;
-  transform: translateY(-1px);
+  opacity: 0.6;
+  outline: 2px solid #666;
+  outline-offset: 2px;
 }
 
 .temporary-language__trigger:focus-visible {
-  outline: 2px solid #003087;
-  outline-offset: 3px;
+  outline: 2px solid #666;
+  outline-offset: 2px;
 }
 
 .temporary-language__icon {
@@ -216,15 +212,16 @@
 
 .temporary-language__option:hover,
 .temporary-language__option:focus-visible {
-  border-color: #003087;
-  background: rgba(0, 48, 135, 0.07);
-  outline: 2px solid #003087;
+  border-color: #7C7CE0;
+  background: #7C7CE0;
+  color: #fff;
+  outline: 2px solid #7C7CE0;
   outline-offset: 2px;
 }
 
 .temporary-language__option--active {
-  border-color: #003087;
-  background: #003087;
+  border-color: #000000;
+  background: #000000;
   color: #fff;
 }
 
@@ -239,7 +236,7 @@
   }
 
   .planet-logo {
-    height: min(clamp(3rem, 9vmax, 7.5rem), 15dvh);
+    width: 200px;
   }
 
   .display-hero-section {
