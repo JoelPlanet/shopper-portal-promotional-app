@@ -105,9 +105,19 @@ export function SettingsView() {
           {saved ? 'Saved ✓' : 'Save'}
         </button>
 
+        {!confirmReset && (
+          <button
+            type="button"
+            className="settings-btn settings-btn--secondary"
+            onClick={handleBack}
+          >
+            Cancel
+          </button>
+        )}
+
         <button
           type="button"
-          className={`settings-btn settings-btn--danger${confirmReset ? ' settings-btn--confirm' : ''}`}
+          className={`settings-btn settings-btn--restore settings-btn--danger${confirmReset ? ' settings-btn--confirm' : ''}`}
           onClick={handleRestoreDefaults}
         >
           {confirmReset ? 'Confirm reset?' : 'Restore defaults'}
@@ -120,16 +130,6 @@ export function SettingsView() {
             onClick={() => setConfirmReset(false)}
           >
             Cancel
-          </button>
-        )}
-
-        {!confirmReset && (
-          <button
-            type="button"
-            className="settings-btn settings-btn--secondary"
-            onClick={handleBack}
-          >
-            ← Back
           </button>
         )}
       </footer>

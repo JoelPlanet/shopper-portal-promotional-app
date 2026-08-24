@@ -9,7 +9,11 @@
   color: #888;
   opacity: 0.25;
   cursor: pointer;
-  padding: 0.75rem;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   line-height: 1;
   transition: opacity 0.2s;
   z-index: 20;
@@ -95,12 +99,12 @@
 }
 
 .pin-btn--primary {
-  background: #003087;
+  background: #000000;
   color: #fff;
 }
 
 .pin-btn--primary:hover:not(:disabled) {
-  background: #004ab5;
+  background: #7C7CE0;
 }
 
 .pin-btn--primary:disabled {
@@ -109,10 +113,11 @@
 }
 
 .pin-btn--secondary {
-  background: #eee;
-  color: #333;
+  background: #fff;
+  color: #000000;
+  border: 1px solid #000000;
 }
 
 .pin-btn--secondary:hover {
-  background: #ddd;
+  background: #f2f2f2;
 }

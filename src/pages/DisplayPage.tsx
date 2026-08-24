@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useNavigationType } from 'react-router-dom'
 import type { LocaleCode } from '@/config/languages'
 import { useConfiguration } from '@/hooks/useConfiguration'
 import { useLanguageRotation } from '@/hooks/useLanguageRotation'
@@ -23,9 +23,11 @@ export default function DisplayPage() {
   const temporaryLanguage = useTemporaryLanguageOverride()
   const location = useLocation()
   const navigate = useNavigate()
+  const navigationType = useNavigationType()
   const routeState = location.state as { showInitialPreservation?: boolean } | null
+  // POP means a fresh document load or reload (in-app navigation uses PUSH).
   const shouldShowInitialPreservation =
-    location.key === 'default' || routeState?.showInitialPreservation === true
+    navigationType === 'POP' || routeState?.showInitialPreservation === true
   const preservation = useScreenPreservation({
     initialDurationMs: shouldShowInitialPreservation
       ? INITIAL_PRESERVATION_DURATION_MS
@@ -87,7 +89,7 @@ export default function DisplayPage() {
       <ScreenPreservationMode
         isActive={preservation.isActive}
         isPeriodic={preservation.isPeriodic}
-        locale={temporaryLanguage.overrideLocale ?? preservationLocale}
+        locale={temporaryLanguage.overrideLocale ?? 'en'}
       />
     </>
   )
