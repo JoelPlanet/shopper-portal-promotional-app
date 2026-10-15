@@ -4,6 +4,8 @@ import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { LocaleCode } from '@/config/languages'
 
+const preservationState = vi.hoisted(() => ({ isActive: false, isPeriodic: false }))
+
 vi.mock('@/components/display/DisplayView', () => ({
   DisplayView: ({
     activeLocale,
@@ -31,7 +33,7 @@ vi.mock('@/components/display/ScreenPreservationMode', () => ({
 
 vi.mock('@/hooks/useScreenPreservation', () => ({
   INITIAL_PRESERVATION_DURATION_MS: 3000,
-  useScreenPreservation: () => ({ isActive: false, isPeriodic: false }),
+  useScreenPreservation: () => preservationState,
 }))
 
 vi.mock('@/hooks/useScreenPreservationLocale', () => ({
@@ -43,6 +45,8 @@ import DisplayPage from './DisplayPage'
 describe('DisplayPage temporary language override', () => {
   beforeEach(() => {
     vi.useFakeTimers()
+    preservationState.isActive = false
+    preservationState.isPeriodic = false
     localStorage.setItem('ndsk:config', JSON.stringify({
       selectedLocales: ['en', 'fr'],
       rotationIntervalSeconds: 5,
@@ -79,5 +83,17 @@ describe('DisplayPage temporary language override', () => {
     expect(screen.getByTestId('display-locale').textContent).toBe('en')
 
     expect(JSON.parse(localStorage.getItem('ndsk:config') ?? '{}').selectedLocales).toEqual(['en', 'fr'])
+  })
+
+  it('marks the page while screen preservation is active so controls can be hidden', () => {
+    preservationState.isActive = true
+
+    const { container } = render(
+      <MemoryRouter initialEntries={['/']}>
+        <DisplayPage />
+      </MemoryRouter>,
+    )
+
+    expect(container.querySelector('.display-page--preserving')).not.toBeNull()
   })
 })

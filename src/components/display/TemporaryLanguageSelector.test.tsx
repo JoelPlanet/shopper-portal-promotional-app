@@ -45,4 +45,20 @@ describe('TemporaryLanguageSelector', () => {
 
     expect(screen.queryByRole('dialog', { name: 'Choose language' })).toBeNull()
   })
+
+  it('closes the picker when clicking outside it', () => {
+    render(
+      <>
+        <TemporaryLanguageSelector activeLocale="en" onSelect={vi.fn()} />
+        <button type="button">Outside</button>
+      </>,
+    )
+
+    fireEvent.click(screen.getByRole('button', { name: 'Choose display language' }))
+    expect(screen.getByRole('dialog', { name: 'Choose language' })).toBeTruthy()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Outside' }))
+
+    expect(screen.queryByRole('dialog', { name: 'Choose language' })).toBeNull()
+  })
 })

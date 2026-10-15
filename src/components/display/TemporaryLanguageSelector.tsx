@@ -12,6 +12,7 @@ export function TemporaryLanguageSelector({ activeLocale, onSelect }: Props) {
   const [isOpen, setIsOpen] = useState(false)
   const triggerRef = useRef<HTMLButtonElement>(null)
   const firstOptionRef = useRef<HTMLButtonElement>(null)
+  const panelRef = useRef<HTMLElement>(null)
 
   const openPicker = () => {
     setIsOpen(true)
@@ -36,9 +37,18 @@ export function TemporaryLanguageSelector({ activeLocale, onSelect }: Props) {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') closePicker()
     }
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (!panelRef.current?.contains(event.target as Node)) {
+        setIsOpen(false)
+      }
+    }
 
     window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
+    window.addEventListener('click', handleOutsideClick)
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener('click', handleOutsideClick)
+    }
   }, [isOpen])
 
   return (
@@ -65,6 +75,7 @@ export function TemporaryLanguageSelector({ activeLocale, onSelect }: Props) {
 
       {isOpen && (
         <section
+          ref={panelRef}
           className="temporary-language__panel"
           role="dialog"
           aria-modal="true"

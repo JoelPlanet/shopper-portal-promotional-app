@@ -19,6 +19,7 @@ export function DisplayView({ activeLocale, onTemporaryLanguageSelect }: Props) 
           alt="Planet"
           className="planet-logo"
         />
+        <p className="display-url">shopperportal.weareplanet.com</p>
       </header>
 
       {/* Localised headline above the hero image */}

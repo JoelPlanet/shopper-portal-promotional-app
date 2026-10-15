@@ -15,8 +15,10 @@
 /* Planet logo section */
 .display-logo-section {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 0.25rem;
   flex-shrink: 0;
   padding-top: clamp(0.5rem, 1.5vw, 1.5rem);
   padding-bottom: clamp(0.5rem, 1.5vw, 1.5rem);
@@ -63,7 +65,17 @@
   object-fit: contain;
 }
 
-/* Localised supporting text below hero image */
+/* Match the supporting text's base size without its fit-to-width behavior. */
+.display-url {
+  --slot-font-size: clamp(0.9rem, 2.2vw, 1.6rem);
+  font-size: var(--slot-font-size);
+  text-align: center;
+  line-height: 1.4;
+  opacity: 0.85;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
 .display-subheading {
   --slot-font-size: clamp(0.9rem, 2.2vw, 1.6rem);
   --slot-padding-top: clamp(0.5rem, 1.5vw, 1.5rem);
@@ -90,6 +102,13 @@
   left: 1rem;
   z-index: 10020;
   direction: ltr;
+}
+
+.display-page--preserving .temporary-language,
+.display-page--preserving .settings-icon-btn,
+.display-page--preserving .display-url {
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .temporary-language__trigger {
@@ -124,8 +143,8 @@
 }
 
 .temporary-language__icon {
-  width: 1.45rem;
-  height: 1.45rem;
+  width: 2.9rem;
+  height: 2.9rem;
   fill: none;
   stroke: currentColor;
   stroke-width: 1.8;
@@ -254,6 +273,7 @@
     --slot-font-size: clamp(1.1rem, 2.8vw, 2.4rem);
   }
 
+  .display-url,
   .display-subheading {
     --slot-font-size: clamp(0.8rem, 1.8vw, 1.4rem);
   }
@@ -266,6 +286,7 @@
     --slot-font-size: clamp(2rem, 2.5vw, 4rem);
   }
 
+  .display-url,
   .display-subheading {
     --slot-font-size: clamp(1.25rem, 1.5vw, 2.25rem);
   }
@@ -278,8 +299,12 @@
     --slot-font-size: min(clamp(1.1rem, 2.8vw, 2.4rem), 4dvh);
   }
 
+  .display-url,
   .display-subheading {
     --slot-font-size: min(clamp(0.8rem, 1.8vw, 1.4rem), 2.5dvh);
+  }
+
+  .display-subheading {
     --slot-padding-top: min(clamp(0.5rem, 1.5vw, 1.5rem), 2dvh);
   }
 }

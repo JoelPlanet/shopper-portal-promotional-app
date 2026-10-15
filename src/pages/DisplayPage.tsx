@@ -78,7 +78,7 @@ export default function DisplayPage() {
   }, [config.selectedLocales])
 
   return (
-    <>
+    <div className={preservation.isActive ? 'display-page display-page--preserving' : 'display-page'}>
       <DisplayView
         activeLocale={displayLocale}
         onTemporaryLanguageSelect={temporaryLanguage.startOverride}
@@ -91,6 +91,6 @@ export default function DisplayPage() {
         isPeriodic={preservation.isPeriodic}
         locale={temporaryLanguage.overrideLocale ?? 'en'}
       />
-    </>
+    </div>
   )
 }

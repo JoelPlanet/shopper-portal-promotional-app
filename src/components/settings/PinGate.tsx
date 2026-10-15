@@ -86,7 +86,12 @@ export function PinGate({ onUnlock }: Props) {
       </button>
 
       {showPin && (
-        <div className="pin-overlay">
+        <div
+          className="pin-overlay"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) handleCancel()
+          }}
+        >
           <div
             className="pin-dialog"
             role="dialog"
