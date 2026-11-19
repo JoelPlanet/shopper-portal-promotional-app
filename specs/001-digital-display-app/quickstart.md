@@ -248,7 +248,9 @@ rotating through each remaining active language.
 
 1. In settings, configure English and French as the only active languages and
    save.
-2. On the display, press the bottom-left language icon.
+2. On the display, click or tap the bottom-left globe. Verify the picker stays
+   open after activation. Repeat using Tab and Enter; Escape should close the
+   picker and return focus to the globe.
 3. Verify the picker lists every supported language, including languages not in
    the active admin rotation.
 4. Select Italian and verify the display switches to Italian immediately.

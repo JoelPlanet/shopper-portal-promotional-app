@@ -10,11 +10,16 @@ interface Props {
 
 export function TemporaryLanguageSelector({ activeLocale, onSelect }: Props) {
   const [isOpen, setIsOpen] = useState(false)
+  const pickerRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
   const firstOptionRef = useRef<HTMLButtonElement>(null)
-  const panelRef = useRef<HTMLElement>(null)
 
-  const openPicker = () => {
+  const togglePicker = () => {
+    if (isOpen) {
+      closePicker()
+      return
+    }
+
     setIsOpen(true)
     trackDisplayAnalyticsEvent('temporary_language_picker_opened')
   }
@@ -27,7 +32,7 @@ export function TemporaryLanguageSelector({ activeLocale, onSelect }: Props) {
   const selectLocale = (locale: LocaleCode) => {
     trackDisplayAnalyticsEvent('temporary_language_selected', { locale })
     onSelect(locale)
-    setIsOpen(false)
+    closePicker()
   }
 
   useEffect(() => {
@@ -38,7 +43,8 @@ export function TemporaryLanguageSelector({ activeLocale, onSelect }: Props) {
       if (event.key === 'Escape') closePicker()
     }
     const handleOutsideClick = (event: MouseEvent) => {
-      if (!panelRef.current?.contains(event.target as Node)) {
+      // The click that opens the picker can reach this listener too.
+      if (event.target instanceof Node && !pickerRef.current?.contains(event.target)) {
         setIsOpen(false)
       }
     }
@@ -52,7 +58,7 @@ export function TemporaryLanguageSelector({ activeLocale, onSelect }: Props) {
   }, [isOpen])
 
   return (
-    <div className="temporary-language">
+    <div className="temporary-language" ref={pickerRef}>
       <button
         ref={triggerRef}
         type="button"
@@ -60,7 +66,7 @@ export function TemporaryLanguageSelector({ activeLocale, onSelect }: Props) {
         aria-label="Choose display language"
         aria-haspopup="dialog"
         aria-expanded={isOpen}
-        onClick={openPicker}
+        onClick={togglePicker}
       >
         <svg
           className="temporary-language__icon"
@@ -75,10 +81,8 @@ export function TemporaryLanguageSelector({ activeLocale, onSelect }: Props) {
 
       {isOpen && (
         <section
-          ref={panelRef}
           className="temporary-language__panel"
           role="dialog"
-          aria-modal="true"
           aria-labelledby="temporary-language-title"
         >
           <div className="temporary-language__header">
